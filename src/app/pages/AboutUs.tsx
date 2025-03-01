@@ -34,15 +34,15 @@ interface Testimonial {
 }
 
 // Blog post type
-interface BlogPost {
-  id: number;
-  title: string;
-  author: string;
-  category: string;
-  date: string;
-  image: string;
-  url: string;
-}
+// interface BlogPost {
+//   id: number;
+//   title: string;
+//   author: string;
+//   category: string;
+//   date: string;
+//   image: string;
+//   url: string;
+// }
 
 // Mission item type
 interface MissionItem {
