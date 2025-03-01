@@ -1,6 +1,5 @@
 "use client";
 
-import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,23 +23,23 @@ export function Sidebar() {
     // );
   };
 
-  useEffect(() => {
-    // Keep collapsible open, when it's subpage is active
-    NAV_DATA.some((section) => {
-      return section.items.some((item) => {
-        return item.items.some((subItem) => {
-          if (subItem.url === pathname) {
-            if (!expandedItems.includes(item.title)) {
-              toggleExpanded(item.title);
-            }
+  // useEffect(() => {
+  //   // Keep collapsible open, when it's subpage is active
+  //   NAV_DATA.some((section) => {
+  //     return section.items.some((item) => {
+  //       return item.items.some((subItem) => {
+  //         if (subItem.url === pathname) {
+  //           if (!expandedItems.includes(item.title)) {
+  //             toggleExpanded(item.title);
+  //           }
 
-            // Break the loop
-            return true;
-          }
-        });
-      });
-    });
-  }, [pathname]);
+  //           // Break the loop
+  //           return true;
+  //         }
+  //       });
+  //     });
+  //   });
+  // }, [pathname]);
 
   return (
     <>
@@ -70,7 +69,6 @@ export function Sidebar() {
               onClick={() => isMobile && toggleSidebar()}
               className="px-0 py-2.5 min-[850px]:py-0"
             >
-              <Logo />
             </Link>
 
             {isMobile && (

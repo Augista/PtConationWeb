@@ -5,7 +5,6 @@ interface Option {
   value: string;
   text: string;
   selected: boolean;
-  element?: HTMLElement;
 }
 
 interface DropdownProps {
@@ -16,57 +15,58 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
   const [options, setOptions] = useState<Option[]>([]);
   const [selected, setSelected] = useState<number[]>([]);
   const [show, setShow] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const trigger = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const loadOptions = () => {
       const select = document.getElementById(id) as HTMLSelectElement | null;
       if (select) {
-        const newOptions: Option[] = Array.from(select.options).map((opt) => ({
-          value: opt.value,
-          text: opt.innerText,
-          selected: opt.selected,
+        const newOptions: Option[] = Array.from(select.options).map((option) => ({
+          value: option.value,
+          text: option.innerText,
+          selected: option.hasAttribute("selected"),
         }));
         setOptions(newOptions);
       }
     };
+
     loadOptions();
   }, [id]);
 
-  const openDropdown = () => setShow(true);
-  const closeDropdown = () => setShow(false);
+  const open = () => setShow(true);
+  const close = () => setShow(false);
+  const isOpen = () => show;
 
-  const toggleSelect = (index: number, event: React.MouseEvent) => {
-    setOptions((prevOptions) => {
-      const newOptions = [...prevOptions];
-      newOptions[index].selected = !newOptions[index].selected;
-      return newOptions;
-    });
-
-    setSelected((prevSelected) =>
-      options[index].selected
-        ? prevSelected.filter((i) => i !== index)
-        : [...prevSelected, index]
+  const select = (index: number) => {
+    const newOptions = [...options];
+    newOptions[index].selected = !newOptions[index].selected;
+    setSelected(
+      newOptions[index].selected
+        ? [...selected, index]
+        : selected.filter((i) => i !== index)
     );
+    setOptions(newOptions);
   };
 
-  const selectedValues = () => selected.map((index) => options[index]?.value || "");
+  const remove = (index: number) => {
+    const newOptions = [...options];
+    newOptions[index].selected = false;
+    setSelected(selected.filter((i) => i !== index));
+    setOptions(newOptions);
+  };
+
+  const selectedValues = () => selected.map((index) => options[index].value);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        triggerRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
-        !triggerRef.current.contains(event.target as Node)
-      ) {
-        closeDropdown();
+    const clickHandler = (event: MouseEvent) => {
+      if (!dropdownRef.current || !trigger.current) return;
+      if (!dropdownRef.current.contains(event.target as Node) && !trigger.current.contains(event.target as Node)) {
+        close();
       }
     };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   }, []);
 
   return (
@@ -75,36 +75,23 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
         Multiselect Dropdown
       </label>
       <select className="hidden" id={id}>
-        {options.map((option, idx) => (
-          <option key={idx} value={option.value} selected={option.selected}>
-            {option.text}
-          </option>
-        ))}
+        <option value="1">Design</option>
+        <option value="2">Development</option>
+        <option value="3">Option 4</option>
+        <option value="4">Option 5</option>
       </select>
-      <div className="flex flex-col items-center">
-        <input type="hidden" name="values" value={selectedValues().join(",")} />
-        <div ref={triggerRef} onClick={openDropdown} className="cursor-pointer">
-          <div className="mb-2 flex rounded border py-2 px-3">
-            <div className="flex flex-wrap gap-3">
-              {selected.map((index) => (
-                <span key={index} className="bg-gray-200 px-2 py-1 rounded">
-                  {options[index]?.text} &times;
-                </span>
-              ))}
-              {selected.length === 0 && <span className="text-gray-400">Select an option</span>}
-            </div>
-          </div>
+
+      <div className="relative">
+        <div ref={trigger} onClick={open} className="w-full cursor-pointer border border-gray-300 p-2 rounded-md">
+          {selected.length === 0 ? "Select an option" : selected.map((index) => options[index].text).join(", ")}
         </div>
-        {show && (
-          <div
-            ref={dropdownRef}
-            className="absolute left-0 top-full z-40 w-full bg-white shadow-lg max-h-60 overflow-y-auto"
-          >
+        {isOpen() && (
+          <div ref={dropdownRef} className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 shadow-md">
             {options.map((option, index) => (
               <div
                 key={index}
-                className={`cursor-pointer p-2 ${option.selected ? "bg-blue-200" : "hover:bg-gray-100"}`}
-                onClick={(event) => toggleSelect(index, event)}
+                className={`p-2 cursor-pointer ${option.selected ? "bg-gray-200" : ""}`}
+                onClick={() => select(index)}
               >
                 {option.text}
               </div>
