@@ -83,7 +83,26 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
 
       <div className="relative">
         <div ref={trigger} onClick={open} className="w-full cursor-pointer border border-gray-300 p-2 rounded-md">
-          {selected.length === 0 ? "Select an option" : selected.map((index) => options[index].text).join(", ")}
+          {selected.length === 0 ? (
+            "Select an option"
+          ) : (
+            <div className="flex flex-wrap gap-1">
+              {selected.map((index) => (
+                <div key={index} className="flex items-center bg-gray-200 px-2 py-1 rounded">
+                  {options[index].text}
+                  <button
+                    className="ml-2 text-red-500"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      remove(index);
+                    }}
+                  >
+                    &times;
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         {isOpen() && (
           <div ref={dropdownRef} className="absolute left-0 top-full mt-1 w-full bg-white border border-gray-300 shadow-md">
@@ -98,6 +117,10 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
             ))}
           </div>
         )}
+      </div>
+
+      <div className="mt-2 text-sm text-gray-600">
+        Selected Values: {selectedValues().join(", ")}
       </div>
     </div>
   );
