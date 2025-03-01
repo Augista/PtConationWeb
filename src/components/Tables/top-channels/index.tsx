@@ -21,7 +21,7 @@ export async function TopChannels({ className }: { className?: string }) {
         className,
       )}
     >
-      <h2 className="mb-4 text-body-2xlg font-bold text-dark dark:text-white">
+      <h2 className="mb-4 text-body-2xlg font-bold text-dark text-gray-950">
         Top Channels
       </h2>
 
@@ -39,7 +39,7 @@ export async function TopChannels({ className }: { className?: string }) {
         <TableBody>
           {data.map((channel, i) => (
             <TableRow
-              className="text-center text-base font-medium text-dark dark:text-white"
+              className="text-center text-base font-medium text-dark text-gray-600"
               key={channel.name + i}
             >
               <TableCell className="flex min-w-fit items-center gap-3">

@@ -1,4 +1,8 @@
 "use client"
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -115,19 +119,19 @@ const AboutUs: React.FC = () => {
     {
       id: 1,
       icon: '/images/coffee.jpg',
-      title: 'All Kind Brand',
+      title: 'Technological Innovation',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
     },
     {
       id: 2,
       icon: '/images/coffee.jpg',
-      title: 'Curated Products',
+      title: 'Environmental Sustainability',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
     },
     {
       id: 3,
       icon: '/images/coffee.jpg',
-      title: 'Pesticide Free Foods',
+      title: 'Product Diversification',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
     },
   ];
@@ -158,21 +162,21 @@ const AboutUs: React.FC = () => {
       id: 1,
       name: 'Smith Alexander',
       position: 'Customer',
-      image: '/images/coffee.jpg',
+      image: '/images/testipeeps.png',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
     {
       id: 2,
       name: 'Jacob William',
       position: 'Customer',
-      image: '/testimonial-2.jpg',
+      image: '/images/testipeeps.png',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
     {
       id: 3,
       name: 'David Johnson',
       position: 'Customer',
-      image: '/testimonial-3.jpg',
+      image: '/images/testipeeps.png',
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
   ];
@@ -335,7 +339,7 @@ const AboutUs: React.FC = () => {
                     height={60}
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+                <h3 className="text-xl font-bold mb-3 text-yellow-600">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
               </div>
             ))}
@@ -344,45 +348,72 @@ const AboutUs: React.FC = () => {
       </section>
 
       {/* Team Members section */}
-      <section className="team-members py-16 bg-gray-100">
-        <div className="container mx-auto px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Team Member</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
-            {teamMembers.map((member) => (
-              <div key={member.id} className="team-member-card text-center">
+      
+    <section className="team-members py-8 bg-gray-200">
+      <div className="container mx-auto px-8">
+        <h2 className="text-3xl font-bold text-center text-gray-800">
+          Team Members
+        </h2>
+        <Swiper
+          spaceBetween={16}
+          slidesPerView={1}
+          breakpoints={{
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 4 },
+          }}
+          autoplay={{ delay: 2000, disableOnInteraction: false }}
+          modules={[Autoplay]}
+          loop
+          className="pb-8"
+        >
+          {teamMembers.map((member) => (
+            <SwiperSlide key={member.id}>
+              <div className="team-member-card text-center">
                 <div className="image-container mb-4">
-                  <Image 
-                    src={member.image} 
-                    alt={member.name} 
-                    width={250} 
-                    height={250} 
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    width={250}
+                    height={250}
                     className="rounded-lg mx-auto"
                   />
                 </div>
-                <h3 className="text-xl font-bold text-yellow-600">{member.name}</h3>
-                <p className=" mb-3 text-cyan-500">{member.position}</p>
+                <h3 className="text-xl font-bold text-yellow-600">
+                  {member.name}
+                </h3>
+                <p className="mb-3 text-cyan-500">{member.position}</p>
                 <div className="social-links flex justify-center space-x-3">
                   {member.socialLinks.facebook && (
-                    <Link href={member.socialLinks.facebook} className="text-gray-600 hover:text-blue-600">
+                    <Link
+                      href={member.socialLinks.facebook}
+                      className="text-gray-600 hover:text-blue-600"
+                    >
                       <i className="fab fa-facebook-f"></i>
                     </Link>
                   )}
                   {member.socialLinks.twitter && (
-                    <Link href={member.socialLinks.twitter} className="text-gray-600 hover:text-blue-600">
+                    <Link
+                      href={member.socialLinks.twitter}
+                      className="text-gray-600 hover:text-blue-600"
+                    >
                       <i className="fab fa-twitter"></i>
                     </Link>
                   )}
                   {member.socialLinks.instagram && (
-                    <Link href={member.socialLinks.instagram} className="text-gray-600 hover:text-blue-600">
+                    <Link
+                      href={member.socialLinks.instagram}
+                      className="text-gray-600 hover:text-blue-600"
+                    >
                       <i className="fab fa-instagram"></i>
                     </Link>
                   )}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </section>
 
       {/* Testimonials section */}
       <section className="testimonials bg-blue-600 py-16">
@@ -406,7 +437,7 @@ const AboutUs: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <h4 className="font-bold">{testimonial.name}</h4>
+                    <h4 className="font-bold text-yellow-600">{testimonial.name}</h4>
                     <p className="text-gray-600 text-sm">{testimonial.position}</p>
                   </div>
                 </div>
@@ -417,8 +448,8 @@ const AboutUs: React.FC = () => {
       </section>
 
       {/* FAQ section */}
-      <section className="faq py-16">
-        <div className="container mx-auto px-4">
+      <section className="faq py-16 bg-cyan-950">
+        <div className="container mx-auto px-4 ">
           <h2 className="text-3xl font-bold text-center mb-12">Some Questions</h2>
           <div className="faq-container max-w-3xl mx-auto">
             {faqs.map((faq) => (
@@ -442,7 +473,7 @@ const AboutUs: React.FC = () => {
           </div>
           <div className="logo-container mt-12 text-center">
             <Image 
-              src="/images/logo.png" 
+              src="/images/logoOutline.png" 
               alt="Co Nation Logo" 
               width={250} 
               height={100} 
@@ -453,7 +484,7 @@ const AboutUs: React.FC = () => {
       </section>
 
       {/* Newsletter section */}
-      <section className="newsletter py-16 bg-black text-white">
+      <section className="newsletter py-16 bg-blue-950 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold mb-4">We make your inbox better</h2>
           <p className="mb-6">Sign up for our newsletter for upcoming tips, daily inspirations, exclusive access to pre-launch product pricing and more.</p>
@@ -461,7 +492,7 @@ const AboutUs: React.FC = () => {
             <input 
               type="email" 
               placeholder="Email" 
-              className="flex-1 p-2 text-black"
+              className="flex-1 p-2 text-gray-200 "
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
