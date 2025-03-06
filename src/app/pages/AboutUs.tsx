@@ -241,20 +241,20 @@ const AboutUs: React.FC = () => {
 
   return (
     <div>
-      <section className="bg-white py-16">
-        <div className="items-center flex">
-          <div className="w-1/2 flex flex-col mx-24 mb-10 md:mb-0">
-            <div className="flex logo-container mb-6 w-1/2">
+      <section className="bg-white py-16 overflow-hidden">
+        <div className="items-center flex max-md:flex-col">
+          <div className="w-1/2 max-md:w-full flex md:flex-col mx-24 mb-10 md:mb-0">
+            <div className="flex logo-container mb-6 md:w-1/2">
               <Image 
                 src="/images/logo.png" 
                 alt="Co Nation Logo" 
                 width={250} 
                 height={100} 
-                className="logo"
+                className="logo max-md:hidden"
               />
             </div>
-            <div className='w-full'>
-            <h1 className="text-3xl font-bold mb-4 text-yellow-600">Co Nation</h1>
+            <div className='w-full overflow-hidden ml-4 mr-4'>
+            <h1 className="text-3xl max-md:text-xl font-bold mb-4 text-yellow-600">Co Nation</h1>
             <p className="text-gray-700 mb-6">
             PT Coffee Nation Prosperity adalah perusahaan yang berkomitmen untuk membawa perubahan dalam industri kopi Indonesia. Dengan visi untuk memberdayakan petani kopi lokal dan menghubungkan mereka dengan pasar yang lebih luas, kami berfokus pada inovasi dalam pengolahan dan distribusi kopi. Kami memahami tantangan yang dihadapi oleh petani kopi Indonesia, seperti keterbatasan pengetahuan tentang standar terbaru dalam pengolahan kopi serta kesulitan dalam memenuhi permintaan pasar yang semakin spesifik.
             </p>
@@ -269,14 +269,14 @@ const AboutUs: React.FC = () => {
             </div>
             </div>
           </div>
-          <div className="flex w-[43%] h-[10%] mt-16 items-center justify-center">
+          <div className="flex w-[43%] max-md:w-[70%] h-[10%] mt-16 max-md:mt-2 items-center justify-center">
             <div className="image-container relative">
               <Image 
                 src="/images/about-header.jpg" 
                 alt="About Us Header" 
                 width={500} 
                 height={400} 
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg max-md:w-[250px]"
               />
             </div>
           </div>

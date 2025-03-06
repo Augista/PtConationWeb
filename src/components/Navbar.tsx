@@ -69,7 +69,7 @@ const Navbar: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex space-x-3">
+            <div className="flex space-x-3 max-md:hidden">
               <Link href="#" className="text-gray-700 hover:text-blue-800">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-facebook">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
@@ -100,7 +100,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Main navigation */}
-      <div className="container mx-auto py-4 flex justify-between items-center px-16">
+      <div className="container mx-auto py-4 flex justify-between items-center px-16 max-md:px-6">
         <Link href="/" className="flex items-center">
           <Image
             src="/images/logo.png"
@@ -165,7 +165,7 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile menu button - only shown on small screens */}
+      {/* Mobile menu button */}
       <div className="md:hidden flex justify-end p-4">
         <button className="text-gray-700 focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
