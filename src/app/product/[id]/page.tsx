@@ -147,21 +147,39 @@ const ProductDetail = () => {
     return <div className="container mx-auto p-6 text-center text-red-600">Produk tidak ditemukan</div>;
   }
 
+  interface CartItem {
+    id: string; // Changed to string to support combined IDs
+    name: string;
+    price: number;
+    originalPrice: number;
+    image: string;
+    secondBeanImage?: string;
+    size: string;
+    blend: string;
+    quantity: number;
+    isCustomBlend: boolean;
+    mainBean?: string; 
+    secondBean?: string;
+    blendRatio?: string;
+  }
+
   // Cart functions
   const addToCart = () => {
     const size = selectedSize || customSize || "Default";
     const blend = selectedBlend || "Regular";
     const calculatedPrice = calculatePrice();
     
-    let cartItem = {
-      id: product.id,
+    let cartItem: CartItem = {
+      id: product.id.toString(),
       name: product.name,
       price: calculatedPrice,
       originalPrice: product.price,
       image: product.image,
+      secondBeanImage: selectedSecondBean?.image || null,
       size: size,
       blend: blend,
-      quantity: quantity
+      quantity: quantity,
+      isCustomBlend: false // Default to false
     };
     
     if (selectedSecondBean && selectedBlend) {
@@ -171,12 +189,16 @@ const ProductDetail = () => {
       
       const blendName = `${product.name} + ${selectedSecondBean.name} (${ratio})`;
       
-      const secondBeanPrice = selectedSecondBean.price * (ratio.split(":")[1] / 100);
-      const mainBeanPrice = calculatedPrice * (ratio.split(":")[0] / 100);
+      const ratioParts = ratio.split(":").map(Number); // Convert to numbers
+      const secondBeanRatio = ratioParts[1] / 100;
+      const mainBeanRatio = ratioParts[0] / 100;
+      
+      const secondBeanPrice = selectedSecondBean.price * secondBeanRatio;
+      const mainBeanPrice = calculatedPrice * mainBeanRatio;
       const blendedPrice = mainBeanPrice + secondBeanPrice;
       
       cartItem = {
-        id: `${product.id}+${selectedSecondBean.id}`,
+        id: `blend-${product.id}-${selectedSecondBean.id}`, // Create a compound string ID
         name: blendName,
         price: blendedPrice,
         originalPrice: product.price,
