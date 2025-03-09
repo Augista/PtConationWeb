@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ShoppingCart, Search, User, ChevronDown } from 'lucide-react';
@@ -12,16 +12,38 @@ interface NavItem {
 
 const Navbar: React.FC = () => {
   const [language, setLanguage] = useState('English');
+  const [cartItemCount, setCartItemCount] = useState(0);
   
   // Navigation items
   const navItems: NavItem[] = [
     { name: 'Home', path: '/', hasDropdown: false },
     { name: 'Our Product', path: '/pages/ProductDisplay', hasDropdown: false },
-    { name: 'Shop', path: '/shop', hasDropdown: true },
+    { name: 'Shop', path: '/pages/Shop', hasDropdown: false },
     { name: 'News', path: '/news', hasDropdown: true },
     { name: 'Dashboard', path: '/pages/Dashboard', hasDropdown: false },
     { name: 'Contact', path: '/contact', hasDropdown: false },
   ];
+  useEffect(() => {
+    const updateCartCount = () => {
+      const storedCart = localStorage.getItem('coffeeShopCart');
+      if (storedCart) {
+        const cartItems = JSON.parse(storedCart);
+        const totalItems = cartItems.reduce((total: any, item: { quantity: any; }) => total + item.quantity, 0);
+        setCartItemCount(totalItems);
+      }
+    };
+    
+    // Initial cart load
+    updateCartCount();
+    
+    // Add event listener for storage changes
+    window.addEventListener('storage', updateCartCount);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('storage', updateCartCount);
+    };
+  }, []);
 
   // Toggle language
   const toggleLanguage = () => {
@@ -157,11 +179,13 @@ const Navbar: React.FC = () => {
           </Link>
           
           <Link href="/cart" className="text-gray-700 hover:text-blue-800 relative">
-            <ShoppingCart size={20} />
-            <span className="absolute -top-2 -right-2 bg-blue-800 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-              1
-            </span>
-          </Link>
+        <ShoppingCart size={20} />
+        {cartItemCount > 0 && (
+          <span className="absolute -top-2 -right-2 bg-blue-800 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+            {cartItemCount}
+          </span>
+        )}
+      </Link>
         </div>
       </div>
 
