@@ -125,20 +125,17 @@ const ProductDetail = () => {
     }, 3000);
   };
 
-  // Load cart items from localStorage
   useEffect(() => {
     const storedCart = localStorage.getItem('coffeeShopCart');
     if (storedCart) {
       setCartItems(JSON.parse(storedCart));
     }
     
-    // Set default image when product loads
     if (product) {
       setSelectedImage(product.image);
     }
   }, [product]);
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('coffeeShopCart', JSON.stringify(cartItems));
   }, [cartItems]);
@@ -677,7 +674,9 @@ const ProductDetail = () => {
                   <span>Rp {formatPrice(getCartTotal())}</span>
                 </div>
                 
-                <button className="w-full bg-blue-600 text-white py-2 rounded font-medium hover:bg-blue-700 transition-colors mb-2">
+                <button 
+                  onClick={() => router.push('/checkout')}
+                  className="w-full bg-blue-600 text-white py-2 rounded font-medium hover:bg-blue-700 transition-colors mb-2">
                   Checkout
                 </button>
                 

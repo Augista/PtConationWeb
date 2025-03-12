@@ -177,7 +177,7 @@ const Navbar: React.FC = () => {
           <Link href="/account" className="text-gray-700 hover:text-blue-800">
             <User size={20} />
           </Link>
-          
+{/*           
           <Link href="/cart" className="text-gray-700 hover:text-blue-800 relative">
         <ShoppingCart size={20} />
         {cartItemCount > 0 && (
@@ -185,7 +185,7 @@ const Navbar: React.FC = () => {
             {cartItemCount}
           </span>
         )}
-      </Link>
+      </Link> */}
         </div>
       </div>
 
