@@ -183,13 +183,23 @@ const ProductDetail = () => {
     };
     
     if (selectedSecondBean && selectedBlend) {
-      const ratio = selectedBlend.includes("70&30") ? "70:30" : 
-                    selectedBlend.includes("80&20") ? "80:20" : 
-                    selectedBlend.includes("50&50") ? "50:50" : "60:40";
+      // Fix the ratio assignment
+      let ratio;
+      if (selectedBlend.includes("7030")) {
+        ratio = "70:30";
+      } else if (selectedBlend.includes("8020")) {
+        ratio = "80:20";
+      } else if (selectedBlend.includes("5050")) {
+        ratio = "50:50";
+      } else if (selectedBlend.includes("6040")) {
+        ratio = "60:40";
+      } else {
+        ratio = "50:50"; // Default ratio
+      }
       
       const blendName = `${product.name} + ${selectedSecondBean.name} (${ratio})`;
       
-      const ratioParts = ratio.split(":").map(Number); // Convert to numbers
+      const ratioParts = ratio.split(":").map(Number); 
       const secondBeanRatio = ratioParts[1] / 100;
       const mainBeanRatio = ratioParts[0] / 100;
       
@@ -198,7 +208,7 @@ const ProductDetail = () => {
       const blendedPrice = mainBeanPrice + secondBeanPrice;
       
       cartItem = {
-        id: `blend-${product.id}-${selectedSecondBean.id}`, // Create a compound string ID
+        id: `blend-${product.id}-${selectedSecondBean.id}`, 
         name: blendName,
         price: blendedPrice,
         originalPrice: product.price,
@@ -628,7 +638,6 @@ const ProductDetail = () => {
                         alt={item.name} 
                         className="w-full h-full object-cover rounded"
                       />
-                      {/* Display second bean image in bottom right corner if this is a custom blend */}
                       {item.isCustomBlend && item.secondBeanImage && (
                         <div className="absolute bottom-0 right-0 w-8 h-8 rounded-full border-2 border-white overflow-hidden">
                           <img 

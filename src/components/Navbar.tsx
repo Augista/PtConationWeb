@@ -17,9 +17,9 @@ const Navbar: React.FC = () => {
   // Navigation items
   const navItems: NavItem[] = [
     { name: 'Home', path: '/', hasDropdown: false },
-    { name: 'Our Product', path: '/pages/ProductDisplay', hasDropdown: false },
+    { name: 'Our Service', path: '/pages/OurServices', hasDropdown: false },
     { name: 'Shop', path: '/pages/Shop', hasDropdown: false },
-    { name: 'News', path: '/news', hasDropdown: true },
+    { name: 'News', path: '/pages/News', hasDropdown: false },
     { name: 'Dashboard', path: '/pages/Dashboard', hasDropdown: false },
     { name: 'Contact', path: '/contact', hasDropdown: false },
   ];
